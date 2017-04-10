@@ -2,18 +2,86 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Movie Buff System</title>
+		<style> 
+			.fieldWrapper>label {width:60px;display:inline-block;text-align:center}
+		</style>
   </head>
+
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+		<div class="fieldWrapper">
+			<label for="searchTitle"> Title </label>
+    	<input id="searchTitle" style="width:460px" onkeypress="return update(event)"/>
+			<button id ="go" style="width:50px"> Go </button> <br>
+		</div>
+		<div class="fieldWrapper">
+			<label for="searchYear"> Year </label>
+			<input id="searchYear" style="width:460px" onkeypress="return update(event)"/>
+		</div>
+		<br>
+	
+		<div style="width:600px">
+			<img id="posterID" src="http://newcsc.csc.mrc.ac.uk/wp-content/uploads/insert-pretty-picture-here1.jpg" alt="Poster" style="width:304px;height:228px;margin-left:auto;margin-right:auto;display:block">
+			<br>
+			<div class="fieldWrapper">
+				<label for="1">Title</label>
+				<input style="width:500px" type="text" id="1" name="title">
+			</div>
+			<div class="fieldWrapper">
+				<label for="2">Year</label>
+				<input style="width:500px" type="text" id="2" name="year">
+			</div>
+			<div class="fieldWrapper">
+				<label for="3">Rating</label>
+				<input style="width:500px" type="text" id="3" name="rating">
+			</div>
+			<div class="fieldWrapper">
+				<label for="4">Genre</label>
+				<input style="width:500px" type="text" id="4" name="genre">
+			</div>
+			<div class="fieldWrapper">
+				<label for="5">Director</label>
+				<input style="width:500px" type="text" id="5" name="director">
+			</div>
+			<div class="fieldWrapper">
+				<label for="6">Actors</label>
+				<input style="width:500px" type="text" id="6" name="actors">
+			</div>
+			<div class="fieldWrapper">
+				<label for="7">Plot</label>
+				<textarea rows="4" cols="60" id="7"> </textarea>
+			</div>
+		</div>
   </body>
 
   <script>
     // You can also require other files to run in this process
-    require('./renderer.js')
+    require('./renderer.js')  
+
+    var api = require('./backend/api_search.js')
+
+    $('#go').click(function() { // clicking "Go" button
+        var event = new Object()
+        event['keyCode'] = 13
+        update(event)    
+    }) 
+
+    function update(event) {
+      if (event.keyCode == 13) {
+        api.searchAPI(event, updateFields)
+      }
+    }
+
+    function updateFields(movieAttributes) {
+      $("#1").val(movieAttributes.title)
+      $("#2").val(movieAttributes.year)
+      $("#3").val(movieAttributes.rated)
+      $("#4").val(movieAttributes.genre)
+      $("#5").val(movieAttributes.director)
+      $("#6").val(movieAttributes.actors)
+      $("#7").val(movieAttributes.plot)
+      $("#posterID").attr('src', movieAttributes.poster)
+      $("#posterID").attr('style', 'margin-left:auto;margin-right:auto;display:block')
+    }
   </script>
 </html>
