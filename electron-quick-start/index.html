@@ -68,7 +68,9 @@
 
     function update(event) {
       if (event.keyCode == 13) {
-        api.searchAPI(event, updateFields)
+				var title = $('#searchTitle').val()
+        var year = $('#searchYear').val()
+        api.searchAPI(title, year, updateFields)
       }
     }
 
