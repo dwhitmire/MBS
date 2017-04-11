@@ -1,0 +1,8 @@
+var MongoClient = require('mongodb').MongoClient,
+  test = require('assert');
+// Connection url
+var url = 'mongodb://localhost:27017/MBS';
+// Connect using MongoClient
+MongoClient.connect(url, function(err, db) {
+  // Use the admin database for the operation
+  var adminDb = db.admin();
