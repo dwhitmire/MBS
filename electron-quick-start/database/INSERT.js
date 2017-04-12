@@ -2,6 +2,9 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost:27017/MBS';
+
+//just inser the info and will insert into collection 
+
 var insertDocument = function(db, callback) {
    db.collection('movies').insertOne( {
         "title" : "Inception",

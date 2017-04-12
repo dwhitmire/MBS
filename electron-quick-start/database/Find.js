@@ -6,7 +6,7 @@ var url = 'mongodb://localhost:27017/MBS';
 
 
 
-/*
+
 var findMovies = function(db, callback) {
    var cursor =db.collection('movies').find( );
    cursor.each(function(err, doc) {
@@ -18,7 +18,7 @@ var findMovies = function(db, callback) {
       }
    });
 };
-*/
+/*
 
 var findMovies = function(db, callback) {
    var cursor =db.collection('movies').find( { "title": "Fury" } );
@@ -32,7 +32,7 @@ var findMovies = function(db, callback) {
    });
 };
 
-
+*/
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
   findMovies(db, function() {
