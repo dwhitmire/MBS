@@ -20,11 +20,8 @@
     "electron": "~1.6.2"
   },
   "dependencies": {
-<<<<<<< HEAD
     "express": "^4.15.2",
-    "mongodb": "^2.2.25"
-=======
+    "mongodb": "^2.2.25",
     "jquery": "^3.2.1"
->>>>>>> ce56f8d1801010d54827399c6e42006ee95fd666
   }
 }
