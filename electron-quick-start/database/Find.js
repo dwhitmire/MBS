@@ -14,10 +14,12 @@ var findMovies = function(db, callback) {
       if (doc != null) {
          console.dir(doc);
       } else {
+         console.log("DB is empty")
          callback();
       }
    });
 };
+
 /*
 
 //to find from title or any attribute 
@@ -35,9 +37,14 @@ var findMovies = function(db, callback) {
 };
 
 */
-MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-  findMovies(db, function() {
-      db.close();
-  });
-});
+
+function printAll() {
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    findMovies(db, function() {
+        db.close();
+    });
+  })
+}
+
+module.exports.printAll = printAll

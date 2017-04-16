@@ -4,20 +4,25 @@ var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost:27017/MBS';
 
 
-var removeMovies = function(db, callback) {
+var removeMovies = function(value, db, callback) {
    db.collection('movies').deleteMany(
-      { "title": "Inception" },
+      { "title" : value },
       function(err, results) {
+         console.log("Why isn't this working")
          console.log(results);
          callback();
       }
    );
 };
 
-MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
+function remove(value) {
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
 
-  removeMovies(db, function() {
-      db.close();
-  });
-});
+    removeMovies(value, db, function() {
+        db.close();
+    });
+  })
+}
+
+module.exports.remove = remove
