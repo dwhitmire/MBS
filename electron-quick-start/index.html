@@ -53,10 +53,45 @@
 			</div>
 		</div>
 
-		<button id ="start" style="width:100px"> Connect Test </button> <br>
-		<button id ="add" style="width:100px"> Add to DB </button> <br>
-		<button id ="remove" style="width:100px"> Remove from DB </button> <br>
-		<button id ="print" style="width:100px"> Print </button> <br>
+		<div class="fieldWrapper">
+			<button id ="start" style="width:100px;height:40px"> Connect Test </button>
+			<button id ="add" style="width:100px;height:40px"> Add to DB </button>
+			<button id ="remove" style="width:120px;height:40px"> Remove from DB </button>
+			<button id ="search" style="width:120px;height:40px"> Search DB </button>
+			<button id ="deleteAll" style="width:120px;height:40px"> Delete All Rows </button>
+			<button id ="print" style="width:100px;height:40px"> Print </button> <br> <br>
+		</div>
+
+		<div id="tablediv">
+			<input type="button" id="addToTable" value="Add to Table"/><br/><br/>
+			<table id="Table" border="1">
+							<col width="200px">
+							<col width="100px">
+							<col width="100px">
+							<col width="200px">
+							<col width="200px">
+							<col width="200px">
+							<col width="200px">
+					<tr>
+							<th>Title</th>
+							<th>Year</th>
+							<th>Rating</th>
+							<th>Genre</th>
+							<th>Director</th>
+							<th>Actors</th>
+							<th>+/-</th>
+					</tr>
+					<tr>
+							<td></td>		
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><input style="width:100%;height:100%" type="button" id="add/remove" value="remove" onclick="table.deleteRow('Table', this)"/></td>
+        	</tr>
+    	</table>
+		</div>
   </body>
 
   <script>
@@ -65,16 +100,28 @@
 
     var api = require('./backend/api_search.js')
 		var startDB = require('./database/Start.js')
-		var printDB = require('./database/Find.js')
+		var searchDB = require('./database/Find.js')
 		var insertDB = require('./database/INSERT.js')
 		var removeDB = require('./database/delete.js')
+		var table = require('./backend/table_functions.js')
+
+		$('#go').click(function() { // clicking "Go" button
+        var event = new Object()
+        event['keyCode'] = 13
+        update(event)    
+    }) 
 
 		$('#start').click(function () { // clicking "start"" button
 				startDB.connect("test")
 		})
 
 		$('#print').click(function () { // clicking "print"" button
-				printDB.printAll()
+				table.deleteAllRows("Table")
+				searchDB.printAll(addToTable)
+		})
+
+		$('#deleteAll').click(function () { // clicking "deleteAll"" button
+				table.deleteAllRows("Table")
 		})
 
 		$('#add').click(function () { // clicking "add" button
@@ -85,11 +132,13 @@
 				removeDB.remove($("#1").val())
 		})
 
-    $('#go').click(function() { // clicking "Go" button
-        var event = new Object()
-        event['keyCode'] = 13
-        update(event)    
-    }) 
+		$('#search').click(function () { // clicking "search" button
+				searchDB.search("title", String($("#1").val()), addToTable)
+		})
+
+		$('#addToTable').click(function () {
+				table.insertRow("Table", $("#1").val(), $("#2").val(), $("#3").val(), $("#4").val(), $("#5").val(), $("#6").val())
+		})
 
     function update(event) {
       if (event.keyCode == 13) {
@@ -110,5 +159,11 @@
       $("#posterID").attr('src', movieAttributes.poster)
       $("#posterID").attr('style', 'margin-left:auto;margin-right:auto;display:block')
     }
+
+	function addToTable(movie) {
+		if (movie != null) {
+			table.insertRow("Table", movie.title, movie.year, movie.rated, movie.genre, movie.director, movie.actors)	
+		}
+	}
   </script>
 </html>
