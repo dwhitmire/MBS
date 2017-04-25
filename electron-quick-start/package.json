@@ -21,7 +21,10 @@
   },
   "dependencies": {
     "express": "^4.15.2",
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",
     "mongodb": "^2.2.25",
-    "jquery": "^3.2.1"
+    "sort-all-in-one": "^1.0.13",
+    "sort-array": "^1.1.1"
   }
 }

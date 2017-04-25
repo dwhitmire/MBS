@@ -8,7 +8,6 @@ var removeMovies = function(value, db, callback) {
    db.collection('movies').deleteMany(
       { "title" : value },
       function(err, results) {
-         console.log("Why isn't this working")
          console.log(results);
          callback();
       }
