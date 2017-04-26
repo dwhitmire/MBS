@@ -115,12 +115,12 @@
 							<col width="200px">
 							<col width="200px">
 					<tr>
-							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Title" onclick="sortArrayby(currentList, 'title', addToTable)"/></th>
-							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Year" onclick="sortArrayby(currentList, 'year', addToTable)"/></th>
-							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Rating" onclick="sortArrayby(currentList, 'rated', addToTable)"/></th>
-							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Genre" onclick="sortArrayby(currentList, 'genre', addToTable)"/></th>
-							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Director" onclick="sortArrayby(currentList, 'director', addToTable)"/></th>
-							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Actors" onclick="sortArrayby(currentList, 'actors', addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Title" onclick="sortArrayby(currentList, 'title', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Year" onclick="sortArrayby(currentList, 'year', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Rating" onclick="sortArrayby(currentList, 'rated', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Genre" onclick="sortArrayby(currentList, 'genre', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Director" onclick="sortArrayby(currentList, 'director', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="add/remove" value="Actors" onclick="sortArrayby(currentList, 'actors', asc, addToTable)"/></th>
 							<th>+/-</th>
 					</tr>
 					<tr>
@@ -151,6 +151,9 @@
 		var text = require('./backend/db_search.js')
 
 		var currentList = []
+
+		var previousKey = null
+		var asc = false
 
 		$('#go').click(function() { // clicking "Go" button
         var event = new Object()
@@ -192,7 +195,7 @@
 				contains.push(text.contains($("#searchYear").val()))
 			}
 			if ($("#searchRating").val() != '') {
-				attributes.push("rating")
+				attributes.push("rated")
 				contains.push(text.contains($("#searchRating").val()))
 			}
 			if ($("#searchGenre").val() != '') {
@@ -277,13 +280,25 @@
 		
 	}
 
-	function sortArrayby(array, key, callBack) {		
+	function sortArrayby(array, key, ascInput, callBack) {		
 		// sort
-		array.sort(function(a, b){
-			if(a[key] < b[key]) return -1;
-			if(a[key] > b[key]) return 1;
-			return 0;
-		})
+		if (ascInput && key == this.previousKey) {
+			asc = false;
+			array.sort(function(a, b){
+				if(a[key] > b[key]) return -1;
+				if(a[key] < b[key]) return 1;
+				return 0;
+			})
+		}
+		else {
+			asc = true
+			previousKey = key
+			array.sort(function(a, b){
+				if(a[key] < b[key]) return -1;
+				if(a[key] > b[key]) return 1;
+				return 0;
+			})
+		}
 
 		addToTable(array)
 	}
