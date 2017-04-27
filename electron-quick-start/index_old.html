@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Movie Buff System</title>
+		<style> 
+			.fieldWrapper>label {width:60px;display:inline-block;text-align:center}
+		</style>
+  </head>
+
+  <body>
+		<div class="fieldWrapper">
+			<label for="apiSearchTitle"> Title </label>
+    	<input id="apiSearchTitle" style="width:460px" onkeypress="return update(event)"/>
+			<button id ="go" style="width:50px"> Go </button> <br>
+		</div>
+		<div class="fieldWrapper">
+			<label for="apiSearchYear"> Year </label>
+			<input id="apiSearchYear" style="width:460px" onkeypress="return update(event)"/>
+		</div>
+		<br>
+	
+		<div style="width:600px">
+			<img id="posterID" src="http://newcsc.csc.mrc.ac.uk/wp-content/uploads/insert-pretty-picture-here1.jpg" alt="Poster" style="width:304px;height:228px;margin-left:auto;margin-right:auto;display:block">
+			<br>
+			<div class="fieldWrapper">
+				<label for="1">Title</label>
+				<input style="width:500px" type="text" id="1" name="title">
+			</div>
+			<div class="fieldWrapper">
+				<label for="2">Year</label>
+				<input style="width:500px" type="text" id="2" name="year">
+			</div>
+			<div class="fieldWrapper">
+				<label for="3">Rating</label>
+				<input style="width:500px" type="text" id="3" name="rating">
+			</div>
+			<div class="fieldWrapper">
+				<label for="4">Genre</label>
+				<input style="width:500px" type="text" id="4" name="genre">
+			</div>
+			<div class="fieldWrapper">
+				<label for="5">Director</label>
+				<input style="width:500px" type="text" id="5" name="director">
+			</div>
+			<div class="fieldWrapper">
+				<label for="6">Actors</label>
+				<input style="width:500px" type="text" id="6" name="actors">
+			</div>
+			<div class="fieldWrapper">
+				<label for="7">Plot</label>
+				<textarea rows="4" cols="60" id="7"> </textarea>
+			</div>
+		</div>		
+
+		<div class="fieldWrapper">
+			<button id ="start" style="width:100px;height:40px"> Connect Test </button>
+			<button id ="add" style="width:100px;height:40px"> Add to DB </button>
+			<button id ="remove" style="width:120px;height:40px"> Remove from DB </button>
+			<button id ="search" style="width:120px;height:40px"> Search DB </button>
+			<button id ="deleteAll" style="width:120px;height:40px"> Delete All Rows </button>
+			<button id ="print" style="width:100px;height:40px"> Library </button> <br> <br>
+		</div>
+
+		<div id="tablediv">
+			<input type="button" id="addSublist" value="Add Sublist" onclick=/><input type="text" id="sublistInput"><br/><br/>
+			<table id="Table_sublists" border="1">
+							<col width="200px">
+					<tr>
+							<th>Sublists</th>
+					</tr>
+					<tr>
+							<td><input style="width:100%;height:100%" type="button" id="sublist" value="" onclick=/></td>
+        			</tr>
+    		</table>
+		</div>
+
+		<div style="width:600px">
+			<label><b>Search:</b></label>
+			<div class="fieldWrapper">
+				<label for="searchTitle">Title</label>
+				<input style="width:500px" type="text" id="searchTitle" name="title">
+			</div>
+			<div class="fieldWrapper">
+				<label for="searchYear">Year</label>
+				<input style="width:500px" type="text" id="searchYear" name="year">
+			</div>
+			<div class="fieldWrapper">
+				<label for="searchRating">Rating</label>
+				<input style="width:500px" type="text" id="searchRating" name="rating">
+			</div>
+			<div class="fieldWrapper">
+				<label for="searchGenre">Genre</label>
+				<input style="width:500px" type="text" id="searchGenre" name="genre">
+			</div>
+			<div class="fieldWrapper">
+				<label for="searchDirector">Director</label>
+				<input style="width:500px" type="text" id="searchDirector" name="director">
+			</div>
+			<div class="fieldWrapper">
+				<label for="searchActors">Actors</label>
+				<input style="width:500px" type="text" id="searchActors" name="actors">
+			</div>
+			<br><br>
+		</div>
+
+		<div id="tablediv">
+			<input type="button" id="addToTable" value="Add to Table"/><br/><br/>
+			<table id="Table" border="1">
+							<col width="200px">
+							<col width="100px">
+							<col width="100px">
+							<col width="200px">
+							<col width="200px">
+							<col width="200px">
+							<col width="200px">
+					<tr>
+							<th><input style="width:100%;height:100%" type="button" id="titleSort" value="Title" onclick="sortArrayby(currentList, 'title', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="yearSort" value="Year" onclick="sortArrayby(currentList, 'year', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="ratedSort" value="Rating" onclick="sortArrayby(currentList, 'rated', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="genreSort" value="Genre" onclick="sortArrayby(currentList, 'genre', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="directorSort" value="Director" onclick="sortArrayby(currentList, 'director', asc, addToTable)"/></th>
+							<th><input style="width:100%;height:100%" type="button" id="actorsSort" value="Actors" onclick="sortArrayby(currentList, 'actors', asc, addToTable)"/></th>
+							<th>+/-</th>
+					</tr>
+					<tr>
+							<td></td>		
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><input style="width:100%;height:100%" type="button" id="add/remove" value="remove" onclick="deleteAndRemove('Table', this)"/></td>
+        			</tr>
+    		</table>
+		</div>
+  </body>
+
+  <script>
+	// onclick="table.deleteRow('Table', this)"
+    // You can also require other files to run in this process
+    require('./renderer.js')  
+	var sortBy = require('sort-array')
+
+    var api = require('./backend/api_search.js')
+		var startDB = require('./database/Start.js')
+		var searchDB = require('./database/Find.js')
+		var insertDB = require('./database/INSERT.js')
+		var removeDB = require('./database/delete.js')
+		var table = require('./backend/table_functions.js')
+		var text = require('./backend/db_search.js')
+
+		var currentList = []
+
+		var previousKey = null
+		var asc = false
+
+		$('#go').click(function() { // clicking "Go" button
+        var event = new Object()
+        event['keyCode'] = 13
+        update(event)    
+  		}) 
+
+		$('#start').click(function () { // clicking "start"" button
+				startDB.connect("test")
+		})
+
+		$('#print').click(function () { // clicking "print"" button				
+				searchDB.printAll(sortArrayby, "title")
+		})
+
+		$('#deleteAll').click(function () { // clicking "deleteAll"" button
+				table.deleteAllRows("Table")
+		})
+
+		$('#add').click(function () { // clicking "add" button
+				insertDB.insert($("#1").val(), $("#2").val(), $("#3").val(), $("#4").val(), $("#5").val(), $("#6").val(), $("#7").val(), $("#posterID").attr('src'))
+		})
+
+		$('#remove').click(function () { // clicking "remove" button
+				removeDB.remove($("#1").val())
+		})
+
+		$('#search').click(function () { // clicking "search" button
+			var count = 0
+			var attributes = []
+			var contains = []
+
+			if ($("#searchTitle").val() != '') {
+				attributes.push("title")
+				contains.push(text.contains($("#searchTitle").val()))
+			}
+			if ($("#searchYear").val() != '') {
+				attributes.push("year")
+				contains.push(text.contains($("#searchYear").val()))
+			}
+			if ($("#searchRating").val() != '') {
+				attributes.push("rated")
+				contains.push(text.contains($("#searchRating").val()))
+			}
+			if ($("#searchGenre").val() != '') {
+				attributes.push("genre")
+				contains.push(text.contains($("#searchGenre").val()))
+			}
+			if ($("#searchDirector").val() != '') {
+				attributes.push("director")
+				contains.push(text.contains($("#searchDirector").val()))
+			}
+			if ($("#searchActors").val() != '') {
+				attributes.push("actors")
+				contains.push(text.contains($("#searchActors").val()))
+			}
+
+			console.log(attributes.length)
+
+			var numInputs = attributes.length
+			if (numInputs == 6) {
+				searchDB.search(attributes[0], contains[0], sortArrayby, attributes[1], contains[1], 
+																   attributes[2], contains[2], 
+																   attributes[3], contains[3], 
+																   attributes[4], contains[4],
+																   attributes[5], contains[5])
+			}
+			else if (numInputs == 5) {
+				searchDB.search(attributes[0], contains[0], sortArrayby, attributes[1], contains[1], 
+																   attributes[2], contains[2], 
+																   attributes[3], contains[3], 
+																   attributes[4], contains[4])
+			}
+			else if (numInputs == 4) {
+				searchDB.search(attributes[0], contains[0], sortArrayby, attributes[1], contains[1], 
+																   attributes[2], contains[2], 
+																   attributes[3], contains[3])
+			}
+			else if (numInputs == 3) {
+				searchDB.search(attributes[0], contains[0], sortArrayby, attributes[1], contains[1], 
+																   attributes[2], contains[2])
+			}
+			else if (numInputs == 2) {
+				searchDB.search(attributes[0], contains[0], sortArrayby, attributes[1], contains[1])
+			}
+			else if (numInputs == 1) {
+				searchDB.search(attributes[0], contains[0], sortArrayby)
+			}
+			
+		})
+
+		$('#addToTable').click(function () {
+				table.insertRow("Table", $("#1").val(), $("#2").val(), $("#3").val(), $("#4").val(), $("#5").val(), $("#6").val())
+		})
+
+    function update(event) {
+      if (event.keyCode == 13) {
+				var title = $('#apiSearchTitle').val()
+        var year = $('#apiSearchYear').val()
+        api.searchAPI(title, year, updateFields)
+      }
+    }
+
+    function updateFields(movieAttributes) {
+      $("#1").val(movieAttributes.title)
+      $("#2").val(movieAttributes.year)
+      $("#3").val(movieAttributes.rated)
+      $("#4").val(movieAttributes.genre)
+      $("#5").val(movieAttributes.director)
+      $("#6").val(movieAttributes.actors)
+      $("#7").val(movieAttributes.plot)
+      $("#posterID").attr('src', movieAttributes.poster)
+      $("#posterID").attr('style', 'margin-left:auto;margin-right:auto;display:block')
+    }
+
+	function addToTable(movies) {		
+		if (movies != null) {
+			table.deleteAllRows("Table")
+			for (var i = 0; i < movies.length; i++) {
+				table.insertRow("Table", movies[i].title, movies[i].year, movies[i].rated, movies[i].genre, movies[i].director, movies[i].actors)	
+			}	
+			currentList = movies		
+		}
+		
+	}
+
+	function sortArrayby(array, key, ascInput, callBack) {		
+		// sort
+		if (ascInput && key == this.previousKey) {
+			asc = false;
+			array.sort(function(a, b){
+				if(a[key] > b[key]) return -1;
+				if(a[key] < b[key]) return 1;
+				return 0;
+			})
+		}
+		else {
+			asc = true
+			previousKey = key
+			array.sort(function(a, b){
+				if(a[key] < b[key]) return -1;
+				if(a[key] > b[key]) return 1;
+				return 0;
+			})
+		}
+
+		addToTable(array)
+	}
+
+	function deleteAndRemove(htmlTable, cell) {
+		var row = cell.parentNode.parentNode.rowIndex
+		var title = currentList[row-1].title
+
+		// remove from db
+		removeDB.remove(title)
+
+		// remove from table
+		table.deleteRow(htmlTable, cell) // this isn't working
+
+		console.log(currentList[row-1].title)
+	}
+
+	function addToSublists(listname) {
+		
+	}
+  </script>
+</html>

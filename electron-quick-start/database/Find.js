@@ -91,7 +91,7 @@ function search(attritube, contains, callBack,
       findMovies(attritube, contains, db, function(movies) {  
           db.close()
           if (callBack) {
-            callBack(movies, "title", addToTable)
+            callBack(movies, "title")
           }
       }, 
       attribute2, contains2, 
